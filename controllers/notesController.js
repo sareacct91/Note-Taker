@@ -18,12 +18,15 @@ const createNote = async (req, res) => {
   }
 
   try {
+    const newNote = { title, text, note_id: uuidv4() };
+
     const data = await fs.readFile('./db/db.json', 'utf8');
     const notes = JSON.parse(data) || [];
-    notes.push({ title, text, note_id: uuidv4() });
+    notes.push(newNote);
+
     await fs.writeFile('./db/db.json', JSON.stringify(notes));
 
-    res.status(StatusCodes.OK).json(notes);
+    res.status(StatusCodes.OK).json(newNote);
 
   } catch (error) {
     console.log('test');
@@ -32,9 +35,14 @@ const createNote = async (req, res) => {
   }
 };
 
+const deleteNote = (req, res) => {
+
+
+};
+
 
 module.exports = {
   getNotes,
   createNote,
-
+  deleteNote,
 };

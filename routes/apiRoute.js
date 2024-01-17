@@ -3,15 +3,11 @@ const { StatusCodes } = require('http-status-codes');
 const express = require('express');
 const router = express.Router();
 
-const {getNotes, createNote} = require('../controllers/notesController');
+const {getNotes, createNote,deleteNote} = require('../controllers/notesController');
 
 router.route('/notes')
   .get(getNotes)
   .post(createNote)
-  .delete()
-
-
-
-
+  .delete(deleteNote)
 
 module.exports = router;

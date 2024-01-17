@@ -2,11 +2,10 @@ const fs = require('fs/promises');
 const { StatusCodes } = require('http-status-codes');
 const { v4: uuidv4 } = require('uuid');
 
-const noteData = require('../db/db.json');
-
+const notes = require('../db/db.json');
 
 const getNotes = (req, res) => {
-  res.status(StatusCodes.OK).json(noteData);
+  res.status(StatusCodes.OK).json(notes);
 };
 
 const createNote = async (req, res) => {
@@ -18,10 +17,7 @@ const createNote = async (req, res) => {
   }
 
   try {
-    const newNote = { title, text, note_id: uuidv4() };
-
-    const data = await fs.readFile('./db/db.json', 'utf8');
-    const notes = JSON.parse(data) || [];
+    const newNote = { title, text, id: uuidv4() };
     notes.push(newNote);
 
     await fs.writeFile('./db/db.json', JSON.stringify(notes));
@@ -35,9 +31,19 @@ const createNote = async (req, res) => {
   }
 };
 
-const deleteNote = (req, res) => {
+const deleteNote = async (req, res) => {
+  const noteid = req.params.id;
 
+  for (const i in notes) {
+    const note = notes[i];
 
+    if (noteid === note.id) {
+      notes.splice(i, 1);
+      await fs.writeFile('./db/db.json', JSON.stringify(notes));
+      res.status(StatusCodes.OK).json({ status: 'success' });
+      return;
+    }
+  }
 };
 
 

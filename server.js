@@ -9,6 +9,8 @@ const logger = require('./middlewares/logger');
 app.use(logger);
 app.use(express.json());
 
+app.use(express.static('public'));
+
 const mainRouter = require('./routes');
 app.use('/', mainRouter);
 

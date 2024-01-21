@@ -10,7 +10,6 @@ A webapp that allows user to create a persistent note on the web from any device
 - [Usage](#usage)
 - [License](#license)
 - [Contributing](#contributing)
-- [Tests](#tests)
 - [Questions](#questions)
 
 
